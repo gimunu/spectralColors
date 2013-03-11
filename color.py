@@ -122,7 +122,7 @@ def XYZ_to(X,Y,Z,outc, which = None, si= None):
 ######################## MAIN ################################
 
 
-VERSION = '0.1 alpha'
+VERSION = '0.0.1'
 
 RESOURCES = './Resources'
 
@@ -173,7 +173,6 @@ class ValidateCspace(argparse.Action):
 
                 if value in csp_specification:
                     specify = True
-                
                     
                 if value not in self.CHOICES and not specify:
                     message = ("invalid choice: {0!r} (choose from {1})"
@@ -182,8 +181,6 @@ class ValidateCspace(argparse.Action):
                                                   for action in self.CHOICES])))
 
                     raise argparse.ArgumentError(self, message)
-
-                    
             setattr(namespace, self.dest, spaces)
                     
 parser.add_argument('-c', '--cspace', action=ValidateCspace,  nargs ='*', default=[['XYZ', None]] ,
