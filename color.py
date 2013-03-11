@@ -30,7 +30,7 @@ try:
 except ImportError:
     XYZColor = None
 
-#standard modules for python > 2.7
+#standard modules python > 2.7
 import math
 import argparse
 import os.path
@@ -129,24 +129,28 @@ RESOURCES = './Resources'
 
 desc="""
 This utility calculates the color associated with a spectral distribution under 
-several different illumination conditions.
+several different illumination conditions.\n
 Colors from reflection, transmission and direct light spectral distributions can 
 be calculated.
 """
 
 parser = argparse.ArgumentParser(version='%s version %s' %(sys.argv[0],VERSION),
-                                 description=desc)
+                                 description=desc,
+                                 formatter_class=argparse.RawTextHelpFormatter)
 
 parser.add_argument('-q', '--quiet', action='store_true',
-                    help='Print out the color in the chosen color-space only. This option is for scripting purposes.')
+                    help=
+'print out the color in the chosen color-space only. This option is mainly for\n\
+scripting purposes. (default: %(default)s)')
 
 parser.add_argument('-g', '--graphic', action='store_true',
-                    help='Plot some fancy graphic output.')    
+                    help='Plot some fancy graphic output. (default: %(default)s)')    
 
 parser.add_argument('-a', '--absorb', action='store_true',
-                    help='The input file is to be considered as an absorbance spectrum (i.e reflectance or transmittance). \
-                    In order to obtain the color an illuminant source has to be specified [-s]. \
-                    By default --absorb=%(default)s.')                      
+                    help=
+'the input file is to be considered as an absorbance spectrum (i.e reflectance \n\
+or transmittance). In order to obtain the color an illuminant source has to be \n\
+specified [-s].(default: %(default)s).')                      
 
 cspaces= ['XYZ', 'xyY', 'RGB']
 csp_specification= ['RGB'] #Which color space accepts additional specifications
@@ -183,25 +187,30 @@ class ValidateCspace(argparse.Action):
             setattr(namespace, self.dest, spaces)
                     
 parser.add_argument('-c', '--cspace', action=ValidateCspace,  nargs ='*', default=[['XYZ', None]] ,
-                    help='Output color space. Options (default value [%(default)s] ): XYZ, xyY, RGB.\
-                    The kind RGB color space can be specified as argument:\'-c RGB apple_rgb\'.\
-                    If specified, the RGB values will be calculated with the Python-Colormath external \
-                    library (http://code.google.com/p/python-colormath/). If no specification is provided the RGB values\
-                    are in the standard sRGB colorspace.')
+                    help=
+'output color space. Options: XYZ, xyY, RGB. The kind RGB color space can be \n\
+specified as argument e.g.:\'-c RGB apple_rgb\'. If specified, the RGB values will \n\
+be calculated with the Python-Colormath external library (http://code.google.com\n\
+/p/python-colormath/). If no specification is provided the RGB values are in the\n\
+standard sRGB colorspace. (default: [%(default)s])')
 
 silist =['d50','d55','d65','d75'] 
 
 parser.add_argument('-s', '--source', action='store',  default='d65', choices = silist,
-                    help='illuminant light source type. Options (default value [%(default)s]): d{50,55,65,75} family. ')
+                    help=
+'illuminant light source type. Options: d{50,55,65,75} family. \n\
+(default: [%(default)s]) ')
 
-parser.add_argument('-o', '--observer', 
-                    help='Standard observer color matching functions. Options (default value [%(default)s]):\
-                          ciexyz31, ciexyzj, ciexyzjv, ciexyz64, lin2012xyz2e_5_7sf',
-     action='store', default='ciexyz64')
+parser.add_argument('-o', '--observer', action='store', default='ciexyz64',
+                    help=
+'standard observer color matching functions. Options: ciexyz31, ciexyzj, \n\
+ciexyzjv, ciexyz64, lin2012xyz2e_5_7sf. (default: [%(default)s]) ')
 
 parser.add_argument('-f','--file', nargs='+', type=argparse.FileType('r'), default=[sys.stdin],
-                    help='The input spectral power distribution I(lambda) must be in nm and defined at least in the\
-                          (visible) range lambda=[380, 780] nm. Multiple input files or direct stdin stream are accepted.')
+                    help=
+'input spectral power distributions I(lambda) files. They must be in nm and \n\
+defined at least in the (visible) range lambda=[380, 780] nm. Multiple input \n\
+files or direct stdin stream are accepted.')
 
 
 args = parser.parse_args()
