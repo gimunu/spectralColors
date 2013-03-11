@@ -38,7 +38,11 @@ import sys
 import logging
 
 ###########################################################
-
+#
+# Convert a tristimulus color value XYZ to target 
+# color-space
+#
+###########################################################
 
 def XYZ_to(X,Y,Z,outc, which = None, si= None):
     "Converts an XYZ color to a target color space"
