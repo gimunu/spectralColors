@@ -235,7 +235,9 @@ if args.observer not in cmflist:
 # CMFs
 lprint ('Color matching functions: %s' % args.observer)
 
-CMF = np.genfromtxt('%s/%s.csv' %(RESOURCES, args.observer), delimiter=',')
+# path relative to the executable
+fn = os.path.join(os.path.dirname(__file__),'%s/%s.csv' %(RESOURCES, args.observer))
+CMF = np.genfromtxt(fn, delimiter=',')
 
 xbar = interp1d(CMF[:,0], CMF[:,1], kind='linear')
 ybar = interp1d(CMF[:,0], CMF[:,2], kind='linear')
@@ -249,7 +251,8 @@ xrange = np.linspace(380, 780, 800)
 
 #Illuminant
 if args.absorb:
-    Sdata = np.genfromtxt('%s/si%s.csv' %(RESOURCES, args.source), delimiter=',')
+    fn = os.path.join(os.path.dirname(__file__),'%s/si%s.csv' %(RESOURCES, args.source))
+    Sdata = np.genfromtxt(fn, delimiter=',')
     S = interp1d(Sdata[:,0], Sdata[:,1], kind='linear')
 
     Xs = integrate.trapz(S(xrange) * xbar(xrange), x= xrange, dx = xrange[1]-xrange[0])
