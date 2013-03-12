@@ -1,18 +1,19 @@
-spectralColors
+Spectral Colors
 ==============
 
-Python utility to calculate the color of physical samples with spectra obtained from *first principles* calculations
-such has produced by e.g. [Octopus](http://www.tddft.org/programs/octopus) TDDFT code.
+A python utility suite to calculate the color of physical samples with spectra obtained from *first principles* calculations
+such has produced by e.g. the [Octopus](http://www.tddft.org/programs/octopus) TDDFT code.
 
-The suite at the moment is composed of a single tool **color.py**. Another tool that calculates the spectral density 
-from the molecular polarizability is soon to come.
+The suite at the moment is composed of a single tool **color.py** only. Another tool that calculates the spectral density 
+from microscopic molecular polarizability is soon to come.
 
 
 
 ## color.py
 
-Calculate the color from a given spectral density.
-The functionality of color.py are partially overlapping with [colormath](http://code.google.com/p/python-colormath/).
+Calculates the color of a light source (also reflection and transmission) from a given spectral density.
+The functionality of color.py are in partial overlap with [colormath](http://code.google.com/p/python-colormath/).
+For this reason is not excluded the possibility to include colormath as required dependency in the future.
 
 External dependencies:
 * nupy
