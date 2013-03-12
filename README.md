@@ -21,7 +21,12 @@ External dependencies:
 * colormath (otptional)
 
 
-Usage:
+####Usage
 
-For more info and updated options see:  
+Calculate the color of a spectral distribution contained in ```file```:  
+```color.py -f file```  
+or from standard input  
+```color.py < file```  
+
+For more info and complete list of features:  
 ```color.py --help``` 
