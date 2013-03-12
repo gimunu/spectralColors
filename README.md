@@ -24,4 +24,4 @@ External dependencies:
 Usage:
 
 For more info and updated options see:  
-'''color.py --help''' 
+```color.py --help``` 
