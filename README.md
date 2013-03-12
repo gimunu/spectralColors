@@ -12,7 +12,7 @@ from the molecular polarizability is soon to come.
 ## color.py
 
 Calculate the color from a given spectral density.
-The functionality of color.py are partially overlapping with colormath (http://code.google.com/p/python-colormath/).
+The functionality of color.py are partially overlapping with [colormath](http://code.google.com/p/python-colormath/).
 
 External dependencies:
 * nupy
