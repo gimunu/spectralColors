@@ -30,6 +30,8 @@ try:
 except ImportError:
     XYZColor = None
 
+import select
+
 #standard modules python > 2.7
 import math
 import argparse
@@ -263,7 +265,7 @@ stdin stream are also accepted.
 
 args = parser.parse_args()
 
-# print  "colorspace",args.cspace
+
 
 #Define logged print 'lprint' in order to control output
 logging.basicConfig(level=logging.WARNING if args.quiet else logging.INFO,
@@ -274,6 +276,14 @@ lprint = logging.info
 #####################
 # Options error check
 #####################
+
+# Check the stdin to actually have data
+if args.file == [sys.stdin]:
+    if not select.select([sys.stdin,],[],[],0.0)[0]:
+        parser.print_usage()
+        sys.exit(2)
+
+
 # Illuminants 
 
 # if args.source not in silist:
@@ -387,6 +397,7 @@ for file in args.file:
         Idata = np.genfromtxt(file, converters = {0:conv, 1:conv}, skip_header=17, skip_footer=1)
     else:
         Idata = np.genfromtxt(file)
+        
     I = interp1d(Idata[:,0], Idata[:,1], kind='linear')
     Itab = I(xrange)
     Itab /= np.amax(Itab) # rescale to have values in [0,1] - numerically stabler   
