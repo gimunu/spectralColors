@@ -302,8 +302,8 @@ zbar = interp1d(CMF[:,0], CMF[:,3], kind='linear')
 
 # The grid of wavelenghts we are going to use 
 # is bounded by cmfs range
-# xrange = np.linspace(np.amin(CMF[:,0]), np.amax(CMF[:,0]), 1000)
-xrange = np.linspace(380, 780, 800)
+xrange = np.linspace(np.amin(CMF[:,0]), np.amax(CMF[:,0]), 1000)
+# xrange = np.linspace(380, 780, 800)
 
 
 #Illuminant
@@ -379,10 +379,14 @@ if args.graphic:
 for file in args.file:
     
         
-    lprint ("Color for: %s" % (file.name))
+    lprint ("Color for: %s " % (file.name))
 
     # The Input spectral density 
-    Idata = np.genfromtxt(file)
+    if os.path.splitext(file.name)[1] == '.ProcSpec':
+        conv = lambda valstr: float(valstr.decode("utf-8").replace(',','.'))
+        Idata = np.genfromtxt(file, converters = {0:conv, 1:conv}, skip_header=17, skip_footer=1)
+    else:
+        Idata = np.genfromtxt(file)
     I = interp1d(Idata[:,0], Idata[:,1], kind='linear')
     Itab = I(xrange)
     Itab /= np.amax(Itab) # rescale to have values in [0,1] - numerically stabler   
